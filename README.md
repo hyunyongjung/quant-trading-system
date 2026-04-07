@@ -115,6 +115,14 @@ Buy & Hold      $ 606.30   102.1%    -16.2%      1.60
 
 > Takeaway: for strongly trending assets like RTX, Buy & Hold wins. ML and MA strategies shine on volatile, mean-reverting tickers.
 
+## Screenshots
+
+### Backtest Results
+![Backtest](backtest_rtx.png.png)
+
+### SHAP Analysis
+![SHAP](shap_rtx.png.png)
+
 ### S&P500 Macro Analysis
 
 Uses SPY, VIX, TLT (bonds), and UUP (dollar index) to estimate the probability of a market rebound over the next 10 trading days.
@@ -198,10 +206,4 @@ This project is for educational purposes only. Nothing in this repository consti
 
 MIT
 
-## Screenshots
 
-### Backtest Results
-![Backtest](backtest_rtx.png.png)
-
-### SHAP Analysis
-![SHAP](shap_rtx.png.png)
