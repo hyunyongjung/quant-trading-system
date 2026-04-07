@@ -46,7 +46,7 @@ FEAT_NAMES = {
     "Volume_ratio": "Volume Ratio",
     "Return_1d":    "1-Day Return",
     "Return_5d":    "5-Day Return",
-    "Volatility":   "Volatility",
+    "Volatility":   "Volatility (20d Std)",
 }
 
 # =====================================================
@@ -290,8 +290,8 @@ def analyze(ticker):
     axes[0].set_yticks(y_pos)
     axes[0].set_yticklabels([FEAT_NAMES[f] for f in FEATURES])
     axes[0].axvline(0, color="black", linewidth=0.8)
-    axes[0].set_title(f"{ticker} — Today's SHAP\nUpside prob {ml_prob*100:.1f}%")
-    axes[0].set_xlabel("SHAP Value (positive=buy, negative=sell)")
+    axes[0].set_title(f"{ticker} — Today's Prediction (SHAP)\nUpside Probability: {ml_prob*100:.1f}%")
+    axes[0].set_xlabel("SHAP Value  (positive = buy contribution,  negative = sell contribution)")
     for bar, val in zip(bars, sv_today):
         axes[0].text(
             val + (0.001 if val >= 0 else -0.001),
@@ -306,7 +306,7 @@ def analyze(ticker):
         [FEAT_NAMES[FEATURES[i]] for i in sorted_idx],
         mean_shap[sorted_idx], color="steelblue", alpha=0.8
     )
-    axes[1].set_title(f"{ticker} — Feature Importance\n(Mean |SHAP|)")
+    axes[1].set_title(f"{ticker} — Overall Feature Importance\n(Mean |SHAP| across test set)")
     axes[1].set_xlabel("Mean |SHAP Value|")
     plt.tight_layout()
     plt.show()
@@ -315,7 +315,9 @@ def analyze(ticker):
     plt.figure(figsize=(10, 6))
     shap.summary_plot(sv_all, X_test,
                       feature_names=[FEAT_NAMES[f] for f in FEATURES], show=False)
-    plt.title(f"{ticker} — SHAP Summary Plot")
+    plt.title(f"{ticker} — SHAP Summary Plot\n"
+              f"Color: red = high feature value,  blue = low feature value\n"
+              f"X-axis: positive = buy contribution,  negative = sell contribution")
     plt.tight_layout()
     plt.show()
 
@@ -323,7 +325,7 @@ def analyze(ticker):
     print("[Today's prediction breakdown]")
     for f, v in sorted(zip(FEATURES, sv_today), key=lambda x: abs(x[1]), reverse=True):
         direction = "📈 buy"  if v > 0 else "📉 sell"
-        print(f"  {FEAT_NAMES[f]:<30}: {v:+.4f}  {direction}")
+        print(f"  {FEAT_NAMES[f]:<35}: {v:+.4f}  {direction}")
     print(f"\n  → {verdict} (upside prob {ml_prob*100:.1f}%)")
 
 
