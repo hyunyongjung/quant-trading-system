@@ -197,3 +197,11 @@ This project is for educational purposes only. Nothing in this repository consti
 ## License
 
 MIT
+
+## Screenshots
+
+### Backtest Results
+![Backtest](backtest_rtx.png.png)
+
+### SHAP Analysis
+![SHAP](shap_rtx.png.png)
